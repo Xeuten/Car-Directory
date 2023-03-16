@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Spring Boot Thymeleaf Web Application</title>
+  <style>
+      h1 {
+        text-align: center;
+      }
+
+      .button {
+        display: block;
+        width: 200px;
+        height: 100px;
+        margin: 0 auto;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        line-height: 100px;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 10px;
+        margin-top: 50px;
+      }
+
+      .button:hover {
+        background-color: #3e8e41;
+      }
+
+      .small-button {
+        display: block;
+        width: 100px;
+        height: 50px;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        line-height: 50px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 10px;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+      }
+
+      .small-button:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+</head>
+<body>
+<h1>Справочник автомобилей</h1>
+<a href="/cars_list" class="button">Вывод списка</a>
+<a href="/add_car_menu" class="button">Добавление автомобиля</a>
+<a href="/delete_car_menu" class="button">Удаление автомобиля</a>
+<a href="/statistics" class="button">Статистика базы</a>
+<a href="/log" class="small-button">Лог</a>
+</body>
+</html>

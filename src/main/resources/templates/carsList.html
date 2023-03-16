@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Spring Boot Thymeleaf Web Application</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        label {
+            text-align: center;
+            white-space: nowrap;
+            width: 30%;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            margin-right: 30%;
+            text-align: center;
+            width: 100%;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            margin: 0 auto;
+            width: 25%;
+            gap: 2.5px;
+            text-align: center;
+        }
+        p {
+            margin: 0 auto;
+            width: 50%;
+            text-align: center;
+        }
+        .submit {
+            margin: 2.5px 40%;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+    </style>
+</head>
+<body>
+<form action='/dashboard' method="post">
+  <div class="input-container">
+    <label for="email">Введите параметры для фильтрации списка автомобилей в формате (цвет: чёрный, марка: Renault):</label>
+    <input type='text' name='email' id="email">
+  </div>
+  <input type="submit" value="Submit" class="submit">
+</form>
+</body>
+</html>

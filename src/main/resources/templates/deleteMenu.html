@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Spring Boot Thymeleaf Web Application</title>
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        label {
+            text-align: right;
+            white-space: nowrap;
+            width: 100%;
+            max-width: 30%;
+            grid-column: 1 / 2;
+        }
+        .input {
+             width: 100%;
+             max-width: 70%;
+             grid-column: 2 / 3;
+        }
+        form {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            margin: 0 auto;
+            width: 25%;
+            gap: 2.5px;
+            text-align: center;
+        }
+        p {
+            margin: 0 auto;
+            width: 50%;
+            text-align: center;
+        }
+        .submit {
+            margin: 2.5px 40%;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
+    </style>
+</head>
+<body>
+<form action='/delete_car' enctype="text/plain" method="post">
+  <label>Введите номер автомобиля:</label>
+  <input type='text' name='registration_id' class="input">
+  <input type="submit" value="Submit" class="submit">
+</form>
+</body>
+</html>
