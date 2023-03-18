@@ -16,8 +16,8 @@ public class GetCarsListController {
     private GetCarsListService getCarsListService;
 
     @PostMapping
-    public String getCarsList(@RequestBody String filters, Model model) {
-        return getCarsListService.getCarsListResponse(filters, model);
+    public String getCarsList(@RequestBody String rawFilters, Model model) {
+        return getCarsListService.getCarsListResponse(rawFilters, model);
     }
 
 }

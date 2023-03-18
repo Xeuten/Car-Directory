@@ -11,11 +11,13 @@ import java.util.stream.Collectors;
 @Component
 public class Utils {
 
+    public String criteria = "";
+
     public boolean validateCriteria(String[] criteria) {
         return Arrays.stream(criteria).allMatch(x -> {
             String[] entry = x.split(":");
             String column = entry[0].trim().toLowerCase();
-            return x.length() == 2 && Arrays.stream(CarFields.values())
+            return entry.length == 2 && Arrays.stream(CarFields.values())
                     .map(CarFields::getField)
                     .collect(Collectors.toCollection(HashSet::new))
                     .contains(column);
@@ -37,6 +39,17 @@ public class Utils {
                 .append(map.get(key))
                 .append(",\n"));
         return builder.deleteCharAt(builder.lastIndexOf(",")).append('}').toString();
+    }
+
+    public String rusToEng(String rusField) {
+        return switch (rusField) {
+            case "номер" -> "registration_id";
+            case "марка" -> "vehicle_brand";
+            case "цвет" -> "color";
+            case "год выпуска" -> "year_of_manufacture";
+            case "дата создания" -> "creation_date";
+            default -> "";
+        };
     }
 
 }

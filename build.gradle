@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '17'
 
 tasks.withType(JavaCompile) {
@@ -24,6 +24,8 @@ dependencies {
 	implementation 'org.postgresql:postgresql:42.5.4'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'com.google.code.gson:gson:2.10.1'
+	implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+	implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

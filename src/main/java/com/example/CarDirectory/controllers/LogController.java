@@ -1,23 +1,22 @@
 package com.example.CarDirectory.controllers;
 
-import com.example.CarDirectory.services.StatisticsService;
+import com.example.CarDirectory.services.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/statistics")
-public class StatisticsController {
+@RequestMapping("/log")
+public class LogController {
 
     @Autowired
-    private StatisticsService statisticsService;
+    private LogService logService;
 
     @GetMapping
-    public String statistics(Model model) {
-        return statisticsService.statisticsResponse(model);
+    public String log(Model model) {
+        return logService.logResponse(model);
     }
 
 }

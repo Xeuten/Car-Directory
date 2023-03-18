@@ -8,6 +8,10 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * В этом классе перечислены обработчики, которые буду вызываться при возникновении
+ * любых ошибок.
+ */
 @ControllerAdvice
 public class ErrorHandler {
 
@@ -32,6 +36,16 @@ public class ErrorHandler {
     @Value("${messages.incorrect_URL}")
     private String incorrectURL;
 
+    @Value("${messages.incorrect_filters}")
+    private String incorrectFilters;
+
+    /**
+     * Этот обработчик вызывается при некорректных пользовательских вводах и также в
+     * случае, если запрос выдал альтернативный результат (отсутствие нужной записи в
+     * базе при удалении или наличие при добавлении).
+     * @param e Исключение, выброшенное методом.
+     * @return Сообщение о соответствующей ошибке.
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
         String generifiedString = e.getMessage().replaceAll("\"[^\"]*\"", "\"%s\"");
@@ -47,14 +61,27 @@ public class ErrorHandler {
         if(e.getMessage().equals(incorrectURL)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(incorrectURL);
         }
+        if(e.getMessage().equals(incorrectFilters)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(incorrectFilters);
+        }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(unknownError);
     }
 
+    /**
+     * Этот обработчик вызывается в случае, если пользователь попытался обратиться к
+     * URL'у, соответствующему POST запросу с помощью GET запроса.
+     * @return Сообщение о соответствующей ошибке.
+     */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<String> handleMethodNotSupported() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(incorrectMethod);
     }
 
+    /**
+     * Этот обработчик вызывается в случае, если ввод пользователя не соответствует
+     * JSON'у корректного формата.
+     * @return Сообщение о соответствующей ошибке.
+     */
     @ExceptionHandler(JsonSyntaxException.class)
     public ResponseEntity<String> handleJsonSyntax() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(incorrectJSON);

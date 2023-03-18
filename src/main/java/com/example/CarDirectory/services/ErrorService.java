@@ -9,6 +9,10 @@ public class ErrorService {
     @Value("${messages.incorrect_URL}")
     private String incorrectURL;
 
+    /**
+     * Этот метод вызывается в случае, если пользователь обратился к некорректному URL'у.
+     * В нём всегда выбрасывается исключение.
+     */
     public String errorResponse() {
         throw new RuntimeException(incorrectURL);
     }

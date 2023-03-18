@@ -2,10 +2,16 @@ package com.example.CarDirectory.services;
 
 import com.example.CarDirectory.persistence.CarRepository;
 import com.example.CarDirectory.util.Utils;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -14,23 +20,38 @@ import java.util.List;
 @Service
 public class StatisticsService {
 
+    private static final Logger log = LogManager.getLogger(StatisticsService.class);
+
     @Autowired
     private CarRepository carRepository;
 
     @Autowired
     private Utils utils;
 
-    public ResponseEntity<String> statisticsResponse() {
+    @Value("${logging.messages.get_statistics}")
+    private String getStatistics;
+
+    /**
+     * Этот метод возвращает статистику о содержимом справочника, а именно количество
+     * записей и даты первой и последней добавленных записей.
+     * @return Строка, соответствующая шаблону, заполненному статистикой базы.
+     */
+    public String statisticsResponse(Model model) {
         HashMap<String, Object> outputMap = new HashMap<>();
         long numberOfEntries = carRepository.count();
         outputMap.put("Количество записей", numberOfEntries);
         if(numberOfEntries == 0) {
-            return ResponseEntity.status(HttpStatus.OK).body(utils.toPrettyJSON(outputMap));
+            model.addAttribute("message", utils.toPrettyJSON(outputMap));
+        } else {
+            List<OffsetDateTime> dates = carRepository.findAll().stream()
+                    .map(x -> OffsetDateTime.parse(x.getCreation_date()))
+                    .toList();
+            outputMap.put("Дата первой добавленной записи", dates.stream().min(OffsetDateTime::compareTo).get());
+            outputMap.put("Дата последней добавленной записи", dates.stream().max(OffsetDateTime::compareTo).get());
+            model.addAttribute("message", utils.toPrettyJSON(outputMap));
         }
-        List<OffsetDateTime> dates = carRepository.selectDates().stream().map(OffsetDateTime::parse).toList();
-        outputMap.put("Дата первой добавленной записи", dates.stream().min(OffsetDateTime::compareTo).get());
-        outputMap.put("Дата последней добавленной записи", dates.stream().max(OffsetDateTime::compareTo).get());
-        return ResponseEntity.status(HttpStatus.OK).body(utils.toPrettyJSON(outputMap));
+        log.info(getStatistics);
+        return "template1";
     }
 
 }

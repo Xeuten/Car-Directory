@@ -1,6 +1,6 @@
 package com.example.CarDirectory.model;
 
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
@@ -12,6 +12,11 @@ import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
 
+/**
+ * Этот класс используется для объектно-реляционного отображения объекта класса Car в
+ * базу данных. У этого класса есть следующие поля: номер, марка, цвет, год выпуска,
+ * и дата создания записи.
+ */
 @Data
 @Entity
 @Table(name="cars")
@@ -44,7 +49,7 @@ public class Car {
     private String creation_date;
 
     public String toJSONString() {
-        return new Gson().toJson(this);
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
 
 }
