@@ -31,7 +31,7 @@ public class ErrorHandler {
     @Value("${messages.unknown_error}")
     private String unknownError;
 
-    @Value("{messages.incorrect_method}")
+    @Value("${messages.incorrect_method}")
     private String incorrectMethod;
 
     @Value("${messages.denied}")
