@@ -15,3 +15,7 @@ docker-compose up --build app
 cd path/to/project
 docker-compose up
 ```
+# Примеры ввода
+Пример корректного JSON'а для добавления автомобиля в справочник:
+
+{ "registration_id": "АА999А95", "vehicle_brand": "Renault", "color": "красный", "year_of_manufacture": "2010"}
