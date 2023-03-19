@@ -4,9 +4,6 @@ import com.example.CarDirectory.model.Car;
 import com.example.CarDirectory.persistence.CarRepository;
 import com.example.CarDirectory.util.Utils;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,9 +12,8 @@ import org.springframework.ui.Model;
 import java.util.Optional;
 
 @Service
+@Log4j2
 public class DeleteCarService {
-
-    private static final Logger log = LogManager.getLogger(DeleteCarService.class);
 
     @Autowired
     private CarRepository carRepository;
@@ -53,7 +49,7 @@ public class DeleteCarService {
         String id = rawID.split("=")[1].trim();
         Optional<Car> car = carRepository.findById(id);
         if(car.isEmpty()) {
-            log.warn(deleteCar + String.format(carNotExists, id));
+            log.warn(deleteCar + String.format(carNotExists), id);
             throw new RuntimeException(String.format(carNotExists, id));
         }
         carRepository.delete(car.get());

@@ -3,8 +3,7 @@ package com.example.CarDirectory.services;
 import com.example.CarDirectory.model.Car;
 import com.example.CarDirectory.persistence.CarRepository;
 import com.example.CarDirectory.util.Utils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,9 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
+@Log4j2
 public class GetCarsListService {
-
-    private static final Logger log = LogManager.getLogger(GetCarsListService.class);
 
     @Autowired
     private CarRepository carRepository;
@@ -67,9 +65,9 @@ public class GetCarsListService {
         }
         List<Car> cars = !criteria.isEmpty() ? carRepository.findCarsByCriteria(criteria) : carRepository.findAll();
         if(!cars.isEmpty()) {
-            StringBuilder builder = new StringBuilder("{\n");
-            cars.forEach(x -> builder.append(x.toJSONString()).append(",\n"));
-            builder.deleteCharAt(builder.lastIndexOf(",")).append('}');
+            StringBuilder builder = new StringBuilder("{<br>");
+            cars.forEach(x -> builder.append(x.toJSONString()).append(",<br>"));
+            builder.deleteCharAt(builder.lastIndexOf(",")).append("}");
             log.info(getCarsList + "успешно");
             model.addAttribute("message", builder.toString());
         } else {

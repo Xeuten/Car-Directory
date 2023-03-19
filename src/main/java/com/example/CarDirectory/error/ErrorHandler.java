@@ -1,6 +1,9 @@
 package com.example.CarDirectory.error;
 
+import com.example.CarDirectory.util.Utils;
 import com.google.gson.JsonSyntaxException;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,11 +12,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- * В этом классе перечислены обработчики, которые буду вызываться при возникновении
+ * В этом классе перечислены обработчики, которые вызываются при возникновении
  * любых ошибок.
  */
 @ControllerAdvice
+@Log4j2
 public class ErrorHandler {
+
+    @Autowired
+    private Utils utils;
 
     @Value("${messages.car_exists}")
     private String carExists;
@@ -38,6 +45,9 @@ public class ErrorHandler {
 
     @Value("${messages.incorrect_filters}")
     private String incorrectFilters;
+
+    @Value("${logging.messages.add_car}")
+    private String addCar;
 
     /**
      * Этот обработчик вызывается при некорректных пользовательских вводах и также в
@@ -84,6 +94,7 @@ public class ErrorHandler {
      */
     @ExceptionHandler(JsonSyntaxException.class)
     public ResponseEntity<String> handleJsonSyntax() {
+        log.warn(addCar + incorrectJSON);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(incorrectJSON);
     }
 
