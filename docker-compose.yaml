@@ -3,6 +3,8 @@ services:
   app:
     image: my-app
     restart: unless-stopped
+    environment:
+      - TZ=Europe/Moscow
     build:
       context: .
     ports:
