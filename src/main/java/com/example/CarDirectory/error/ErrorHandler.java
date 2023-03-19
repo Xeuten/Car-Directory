@@ -74,6 +74,7 @@ public class ErrorHandler {
         if(e.getMessage().equals(incorrectFilters)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(incorrectFilters);
         }
+        log.warn(unknownError);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(unknownError);
     }
 

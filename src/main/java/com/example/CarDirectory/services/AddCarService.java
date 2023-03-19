@@ -52,11 +52,11 @@ public class AddCarService {
             throw new JsonSyntaxException("");
         }
         if(carRepository.findById(car.registration_id).isPresent()) {
-            log.warn(addCar + String.format(carExists), car.registration_id);
+            log.warn(addCar + String.format(carExists, car.registration_id));
             throw new RuntimeException(String.format(carExists, car.registration_id));
         }
         carRepository.save(new Car(car));
-        log.info(addCar + String.format(carSaved), car.registration_id);
+        log.info(addCar + String.format(carSaved, car.registration_id));
         model.addAttribute("message", String.format(carSaved, car.registration_id));
         return "template1";
     }

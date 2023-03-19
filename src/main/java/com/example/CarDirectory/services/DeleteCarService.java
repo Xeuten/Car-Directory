@@ -49,7 +49,7 @@ public class DeleteCarService {
         String id = rawID.split("=")[1].trim();
         Optional<Car> car = carRepository.findById(id);
         if(car.isEmpty()) {
-            log.warn(deleteCar + String.format(carNotExists), id);
+            log.warn(deleteCar + String.format(carNotExists, id));
             throw new RuntimeException(String.format(carNotExists, id));
         }
         carRepository.delete(car.get());
